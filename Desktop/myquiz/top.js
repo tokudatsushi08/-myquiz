@@ -18,8 +18,25 @@
                 const objRes = JSON.parse(response);
                 console.log(objRes);
                 const quizContent = objRes.results;
-                quizs.push(quizContent);
+
+                for (let i = 0; i < objRes.results.length; i++) {
+                    quizs.push(quizContent[i]);
+                }
+
+                console.log(quizs);
+                console.log(quizs[1]);
+                console.log(quizs.length);
+
+                // ランダムにする処理
+                const randomQuizs = Math.floor(Math.random() * quizs.length);
+                console.log(randomQuizs);
+
+                // 一度表示されたものは削除していく
+                quizs.splice(randomQuizs, 1);
                 console.log(quizs);
             })
     });
+
+
+
 }
