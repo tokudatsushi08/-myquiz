@@ -19,24 +19,22 @@
                 console.log(objRes);
                 const quizContent = objRes.results;
 
-                for (let i = 0; i < objRes.results.length; i++) {
+                // quizsの配列にpushする処理
+                for (let i = 0; i < quizContent.length; i++) {
                     quizs.push(quizContent[i]);
                 }
 
-                console.log(quizs);
-                console.log(quizs[1]);
-                console.log(quizs.length);
+                // 配列の中身をシャッフルする処理
+                const quizsLength = quizs.length;
+                for (let i = quizsLength - 1; i > 0; i--) {
+                    const randomIndex = Math.floor(Math.random() * (i + 1));
+                    [quizs[i], quizs[randomIndex]] = [quizs[randomIndex], quizs[i]];
+                }
 
-                // ランダムにする処理
-                const randomQuizs = Math.floor(Math.random() * quizs.length);
-                console.log(randomQuizs);
-
-                // 一度表示されたものは削除していく
-                quizs.splice(randomQuizs, 1);
                 console.log(quizs);
             })
+
+
     });
-
-
 
 }
