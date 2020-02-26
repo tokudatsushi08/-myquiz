@@ -1,40 +1,67 @@
 'user strict'
 
 {
-    const startBtn = document.getElementById('startBtn');
+    const startBtn = document.getElementById('start-btn');
+    const topBtn = document.getElementById('top-btn');
+    const topDisplay = document.getElementById('display');
     const quizs = [];
+    const questionNumber = document.getElementById('topSection');
+    const questionGenre = document.getElementById('genreSection');
+    const questionDifficulty = document.getElementById('difficultSection');
+    const question = document.getElementById('question');
+
     startBtn.addEventListener('click', function () {
 
         // fetch→URLからAPIを持ってくる処理
-        fetch('https://opentdb.com/api.php?amount=10')
+        fetch('http://opentdb.com/api.php?amount=10')
             .then(function (response) {
-                if (response.ok) {
-                    return response.text();
-                } else {
-                    return Promise.reject(new Error('エラーです'))
-                };
+                return response.json();
             })
-            .then(function (response) {
-                const objRes = JSON.parse(response);
-                console.log(objRes);
-                const quizContent = objRes.results;
-
-                // quizsの配列にpushする処理
-                for (let i = 0; i < quizContent.length; i++) {
-                    quizs.push(quizContent[i]);
+            .catch(function () {
+                return Promise.reject(new Error('エラーです'));
+            })
+            .then(function (data) {
+                const jsonData = data.results;
+                console.log(jsonData[0]);
+                for (let i = 0; i < jsonData.length; i++) {
+                    quizs.push(jsonData[i]);
                 }
-
-                // 配列の中身をシャッフルする処理
-                const quizsLength = quizs.length;
-                for (let i = quizsLength - 1; i > 0; i--) {
-                    const randomIndex = Math.floor(Math.random() * (i + 1));
-                    [quizs[i], quizs[randomIndex]] = [quizs[randomIndex], quizs[i]];
-                }
-
                 console.log(quizs);
             })
+    })
+
+    const showQuiz = function () {
+        const quizCategory = quizs[0].category;
+        const quizDifficulty = quizs[0].difficulty;
+        const quizQuestion = quizs[0].question;
+        console.log(quizQuestion);
+
+        questionNumber.innerHTML = 1;
+        questionGenre.innerHTML = quizCategory;
+        questionDifficulty.innerHTML = quizDifficulty;
+        question.innerHTML = quizQuestion;
+
+        const answerBtn_01 = document.createElement('button');
+        const answerBtn_02 = document.createElement('button');
+        const answerBtn_03 = document.createElement('button');
+        const answerBtn_04 = document.createElement('button');
+
+        topDisplay.appendChild(answerBtn_01);
+        topDisplay.appendChild(answerBtn_02);
+        topDisplay.appendChild(answerBtn_03);
+        topDisplay.appendChild(answerBtn_04);
+
+        topBtn.removeChild(startBtn);
+
+        // remove(startBtn);
+
+        answerBtn_01.innerHTML = quizs[0].correct_answer;
+        answerBtn_02.innerHTML = quizs[0].incorrect_answers[0];
+        answerBtn_03.innerHTML = quizs[0].incorrect_answers[1];
+        answerBtn_04.innerHTML = quizs[0].incorrect_answers[2];
 
 
-    });
+
+    };
 
 }
