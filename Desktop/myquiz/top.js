@@ -5,9 +5,9 @@
     const topBtn = document.getElementById('top-btn');
     const topDisplay = document.getElementById('display');
     const quizs = [];
-    const questionNumber = document.getElementById('topSection');
-    const questionGenre = document.getElementById('genreSection');
-    const questionDifficulty = document.getElementById('difficultSection');
+    const questionNumber = document.getElementById('top-section');
+    const questionGenre = document.getElementById('genre-section');
+    const questionDifficulty = document.getElementById('difficult-section');
     const question = document.getElementById('question');
 
     startBtn.addEventListener('click', function () {
@@ -17,23 +17,16 @@
     // fetch→URLからAPIを持ってくる処理
     const getQuiz = function () {
         fetch('http://opentdb.com/api.php?amount=10')
+            // fetchで外部APIを取得する。fetchを使う事で、Promiseオブジェクトを返してくれる。
+            // promiseオブジェクトとは、非同期処理の成功・失敗を表してくれるもので非同期処理に最適。
+            // Promiseオブジェクトを使う事で、コールバック関数（ある動きをした後に特定の関数を行うもの）が実行される事はない。
+            // Promiseオブジェクトを使い、成功するとResponseオブジェクトを返してくれる。
             .then(function (response) {
                 return response.json();
             })
-            .then(function (myjson) {
-                for (let i = 0; i < 10; i++) {
-                    const jsonData = myjson.results[i];
-                    quizs.push(jsonData);
-                }
-                // for (let i = 0; i < jsonData.length; i++) {
-                //     quizs.push(jsonData[i]);
-                console.log(quizs);
-                // }
-                // console.log(myjson);
-                // console.log(myjson.results[0].category);
-            })
-            .then(function () {
-                showQuiz();
+            .then(function (data) {
+                console.log(data);
+                console.log(data.results);
             })
             .catch(function (error) {
                 return error;
