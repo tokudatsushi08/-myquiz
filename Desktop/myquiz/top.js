@@ -15,12 +15,14 @@
         // fetch→URLからAPIを持ってくる処理
         fetch('http://opentdb.com/api.php?amount=10')
             .then(function (response) {
-                console.log(response.json());
                 return response.json();
-
             })
-            .catch(function () {
-                return Promise.reject(new Error('エラーです'));
+            .then(function (data) {
+                console.log(data);
+                console.log(data.results);
+            })
+            .catch(function (error) {
+                console.log(error);
             })
 
 
