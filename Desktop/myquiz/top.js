@@ -11,23 +11,43 @@
     const question = document.getElementById('question');
 
     startBtn.addEventListener('click', function () {
+        getQuiz();
+    })
 
-        // fetch→URLからAPIを持ってくる処理
+    // fetch→URLからAPIを持ってくる処理
+    const getQuiz = function () {
         fetch('http://opentdb.com/api.php?amount=10')
             .then(function (response) {
                 return response.json();
             })
-            .catch(function () {
-                return Promise.reject(new Error('エラーです'));
-            })
-            .then(function (data) {
-                const jsonData = data.results;
-                console.log(jsonData[0]);
-                for (let i = 0; i < jsonData.length; i++) {
-                    quizs.push(jsonData[i]);
+            .then(function (myjson) {
+                for (let i = 0; i < 10; i++) {
+                    const jsonData = myjson.results[i];
+                    quizs.push(jsonData);
                 }
+                // for (let i = 0; i < jsonData.length; i++) {
+                //     quizs.push(jsonData[i]);
                 console.log(quizs);
+                // }
+                // console.log(myjson);
+                // console.log(myjson.results[0].category);
             })
-    })
+            .then(function () {
+                showQuiz();
+            })
+            .catch(function (error) {
+                return error;
+            })
 
+
+    }
+
+    // 画面に表示される処理
+    const showQuiz = function () {
+        console.log(quizs[0]);
+        questionNumber.innerHTML = 1;
+        questionGenre.innerHTML = quizs[0].category;
+        questionDifficulty.innerHTML = quizs[0].difficulty;
+        question.innerHTML = quizs[0].question;
+    }
 }
