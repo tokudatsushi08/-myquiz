@@ -61,12 +61,26 @@
                     secondBtn.textContent = answerObj[1];
 
                     topBtn.appendChild(firstBtn);
-                    console.log(firstBtn);
                     topBtn.appendChild(secondBtn);
+
+                    firstBtn.addEventListener('click', function () {
+                        console.log('１番が押されたよ！');
+                        topBtn.removeChild(firstBtn);
+                        topBtn.removeChild(secondBtn);
+                        nextQuiz();
+                    })
+
+                    secondBtn.addEventListener('click', function () {
+                        console.log('2番が押されたよ！');
+                        topBtn.removeChild(firstBtn);
+                        topBtn.removeChild(secondBtn);
+                        nextQuiz();
+                    })
+
 
                 } else {
                     const firstBtn = document.createElement('button');
-                    const secondeBtn = document.createElement('button');
+                    const secondBtn = document.createElement('button');
                     const thirdBtn = document.createElement('button');
                     const forthBtn = document.createElement('button');
                     const answerObj = [];
@@ -84,19 +98,172 @@
                     }
 
                     firstBtn.textContent = answerObj[0];
-                    secondeBtn.textContent = answerObj[1];
+                    secondBtn.textContent = answerObj[1];
                     thirdBtn.textContent = answerObj[2];
                     forthBtn.textContent = answerObj[3];
 
                     topBtn.appendChild(firstBtn);
-                    topBtn.appendChild(secondeBtn);
+                    topBtn.appendChild(secondBtn);
                     topBtn.appendChild(thirdBtn);
                     topBtn.appendChild(forthBtn);
+
+                    firstBtn.addEventListener('click', function () {
+                        console.log('１番が押されたよ！');
+                        topBtn.removeChild(firstBtn);
+                        topBtn.removeChild(secondBtn);
+                        topBtn.removeChild(thirdBtn);
+                        topBtn.removeChild(forthBtn);
+                        nextQuiz();
+                    })
+
+                    secondBtn.addEventListener('click', function () {
+                        console.log('2番が押されたよ！');
+                        topBtn.removeChild(firstBtn);
+                        topBtn.removeChild(secondBtn);
+                        topBtn.removeChild(thirdBtn);
+                        topBtn.removeChild(forthBtn);
+                        nextQuiz();
+                    })
+
+                    thirdBtn.addEventListener('click', function () {
+                        console.log('3番が押されたよ！');
+                        topBtn.removeChild(firstBtn);
+                        topBtn.removeChild(secondBtn);
+                        topBtn.removeChild(thirdBtn);
+                        topBtn.removeChild(forthBtn);
+                        nextQuiz();
+                    })
+
+                    forthBtn.addEventListener('click', function () {
+                        console.log('4番が押されたよ！');
+                        topBtn.removeChild(firstBtn);
+                        topBtn.removeChild(secondBtn);
+                        topBtn.removeChild(thirdBtn);
+                        topBtn.removeChild(forthBtn);
+                        nextQuiz();
+                    })
                 }
+
+
             })
             .catch(function (error) {
                 return error;
             })
 
     };
+
+    // 次のクイズを表示する
+    const nextQuiz = function () {
+        quizs.splice(0, 1)
+        console.log(quizs);
+        console.log(quizs[0]);
+
+
+        questionNumber.innerHTML = 11 - quizs.length;
+        questionGenre.innerHTML = quizs[0].category;
+        questionDifficulty.innerHTML = quizs[0].difficulty;
+        question.innerHTML = quizs[0].question;
+
+        if (quizs[0].incorrect_answers.length === 1) {
+            const firstBtn = document.createElement('button');
+            const secondBtn = document.createElement('button');
+            const answerObj = [];
+            answerObj.push(quizs[0].correct_answer);
+            answerObj.push(quizs[0].incorrect_answers[0]);
+
+            for (let i = answerObj.length - 1; i > 0; i--) {
+                let r = Math.floor(Math.random() * (i + 1));
+                let tmp = answerObj[i];
+                answerObj[i] = answerObj[r];
+                answerObj[r] = tmp;
+            }
+            console.log(answerObj);
+            firstBtn.textContent = answerObj[0];
+
+            secondBtn.textContent = answerObj[1];
+
+            topBtn.appendChild(firstBtn);
+            topBtn.appendChild(secondBtn);
+
+            firstBtn.addEventListener('click', function () {
+                console.log('１番が押されたよ！');
+                topBtn.removeChild(firstBtn);
+                topBtn.removeChild(secondBtn);
+                nextQuiz();
+            })
+
+            secondBtn.addEventListener('click', function () {
+                console.log('2番が押されたよ！');
+                topBtn.removeChild(firstBtn);
+                topBtn.removeChild(secondBtn);
+                nextQuiz();
+            })
+        } else {
+            const firstBtn = document.createElement('button');
+            const secondBtn = document.createElement('button');
+            const thirdBtn = document.createElement('button');
+            const forthBtn = document.createElement('button');
+            const answerObj = [];
+
+            answerObj.push(quizs[0].correct_answer);
+            answerObj.push(quizs[0].incorrect_answers[0]);
+            answerObj.push(quizs[0].incorrect_answers[1]);
+            answerObj.push(quizs[0].incorrect_answers[2]);
+
+            for (let i = answerObj.length - 1; i > 0; i--) {
+                let r = Math.floor(Math.random() * (i + 1));
+                let tmp = answerObj[i];
+                answerObj[i] = answerObj[r];
+                answerObj[r] = tmp;
+            }
+
+            firstBtn.textContent = answerObj[0];
+            secondBtn.textContent = answerObj[1];
+            thirdBtn.textContent = answerObj[2];
+            forthBtn.textContent = answerObj[3];
+
+            topBtn.appendChild(firstBtn);
+            topBtn.appendChild(secondBtn);
+            topBtn.appendChild(thirdBtn);
+            topBtn.appendChild(forthBtn);
+
+            firstBtn.addEventListener('click', function () {
+                console.log('１番が押されたよ！');
+                topBtn.removeChild(firstBtn);
+                topBtn.removeChild(secondBtn);
+                topBtn.removeChild(thirdBtn);
+                topBtn.removeChild(forthBtn);
+                nextQuiz();
+            })
+
+            secondBtn.addEventListener('click', function () {
+                console.log('2番が押されたよ！');
+                topBtn.removeChild(firstBtn);
+                topBtn.removeChild(secondBtn);
+                topBtn.removeChild(thirdBtn);
+                topBtn.removeChild(forthBtn);
+                nextQuiz();
+            })
+
+            thirdBtn.addEventListener('click', function () {
+                console.log('3番が押されたよ！');
+                topBtn.removeChild(firstBtn);
+                topBtn.removeChild(secondBtn);
+                topBtn.removeChild(thirdBtn);
+                topBtn.removeChild(forthBtn);
+                nextQuiz();
+            })
+
+            forthBtn.addEventListener('click', function () {
+                console.log('4番が押されたよ！');
+                topBtn.removeChild(firstBtn);
+                topBtn.removeChild(secondBtn);
+                topBtn.removeChild(thirdBtn);
+                topBtn.removeChild(forthBtn);
+                nextQuiz();
+            })
+        }
+
+    }
+
 }
