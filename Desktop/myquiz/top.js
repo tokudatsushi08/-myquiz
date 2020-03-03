@@ -14,13 +14,16 @@
     const question = document.getElementById('question');
 
     startBtn.addEventListener('click', function () {
+
         questionNumber.innerHTML = "取得中";
         question.innerHTML = "少々お待ちください";
         getQuiz();
     })
-
-    // fetch→URLからAPIを持ってくる処理
+  
+    // クイズを取ってくる処理
     const getQuiz = function () {
+        // fetch→URLからAPIを持ってくる処理
+
         fetch('http://opentdb.com/api.php?amount=10')
             // fetchで外部APIを取得する(リクエスト)。fetchを使う事で、Promiseオブジェクトを返してくれる（レスポンス）。
             // promiseオブジェクトとは、非同期処理の成功・失敗を表してくれるもので非同期処理に最適。
@@ -28,6 +31,7 @@
             // Promiseオブジェクトを使いレスポンスが正しい回答で回答あれば、thenの処理をし、誤った回答であればcatchの処理を行う。
             // 成功した場合は、responseの内容を引数に入れられる。
             .then(function (response) {
+
                 console.log(response);
                 return response.json();
             })
@@ -125,6 +129,17 @@
 
             topBtn.appendChild(firstBtn);
             topBtn.appendChild(secondBtn);
+          
+            })
+            .then(function (data) {
+                console.log(data);
+                console.log(data.results);
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+    }
+
 
             firstBtn.addEventListener('click', function () {
                 console.log('１番が押されたよ！');
