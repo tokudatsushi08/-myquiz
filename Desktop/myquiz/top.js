@@ -94,13 +94,20 @@
         for (let i = 0; i < array.length; i++) {
             topBtn.appendChild(array[i]);
             array[i].addEventListener('click', function () {
+
+                // 回答ボタンで押されたものが正解だった場合
                 if (array[i].textContent === correct) {
                     array.splice(0, array.length);
                     console.log(array);
                     topBtn.innerHTML = '';
-                    nextQuiz(number);
                     answerCount.push(1);
-                } else {
+                    console.log('正解だよ！');
+                    console.log(answerCount);
+
+                    nextQuiz(number);
+                }
+                // 回答ボタンで押されたものが不正解だった場合
+                else {
                     array.splice(0, array.length);
                     console.log(array);
                     topBtn.innerHTML = '';
@@ -116,34 +123,47 @@
         if (questNumber < 10) {
             showQuiz(questNumber);
         } else {
-            const answerNumber = document.createElement('p');
-            const reStartBtn = document.createElement('button');
-            const countUpNumber = answerCount.length;
-            answerNumber.textContent = "あなたの正解数は" + countUpNumber + 'です!';
-            reStartBtn.textContent = "再チャレンジする";
-            question.textContent = "再チャレンジしたい場合は下のボタンをクリック！";
-
-            topDisplay.removeChild(questionNumber);
-            topDisplay.removeChild(topgenre);
-            topDisplay.removeChild(topDifficult);
-
-            topDisplay.appendChild(answerNumber);
-            topBtn.appendChild(reStartBtn);
-
-            reStartBtn.addEventListener('click', function () {
-                topDisplay.removeChild(answerNumber);
-                topBtn.removeChild(reStartBtn);
-                topDisplay.appendChild(questionNumber);
-                topDisplay.appendChild(topgenre);
-                topDisplay.appendChild(topDifficult);
-                questionNumber.innerHTML = "取得中";
-                question.innerHTML = "少々お待ちください";
-                questionGenre.innerHTML = "";
-                questionDifficulty.innerHTML = "";
-                answerCount.length = 0;
-                getQuiz();
-            })
+            lastQuiz();
         }
     }
+
+    const lastQuiz = function () {
+        const answerNumber = document.createElement('p');
+        const reStartBtn = document.createElement('button');
+        const countUpNumber = answerCount.length;
+
+        console.log(answerCount.length);
+
+        answerNumber.textContent = "あなたの正解数は" + countUpNumber + 'です!';
+        reStartBtn.textContent = "再チャレンジする";
+        question.textContent = "再チャレンジしたい場合は下のボタンをクリック！";
+
+        topDisplay.removeChild(questionNumber);
+        topDisplay.removeChild(topgenre);
+        topDisplay.removeChild(topDifficult);
+
+        topDisplay.appendChild(answerNumber);
+        topBtn.appendChild(reStartBtn);
+
+        reStartBtn.addEventListener('click', function () {
+            showRestart(answerNumber, reStartBtn);
+        })
+    }
+
+    const showRestart = function (answerNumber, restartBtn) {
+
+        topDisplay.removeChild(answerNumber);
+        topBtn.removeChild(restartBtn);
+        topDisplay.appendChild(questionNumber);
+        topDisplay.appendChild(topgenre);
+        topDisplay.appendChild(topDifficult);
+        questionNumber.innerHTML = "取得中";
+        question.innerHTML = "少々お待ちください";
+        questionGenre.innerHTML = "";
+        questionDifficulty.innerHTML = "";
+        answerCount.length = 0;
+        getQuiz();
+    }
+
 }
 
