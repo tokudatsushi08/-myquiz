@@ -44,11 +44,44 @@
                 quizs = quizResults.slice(0, quizResults.length);
                 console.log(quizs);
 
+                showQuiz(0);
                 topBtn.removeChild(startBtn);
             })
             .catch(function (error) {
                 return error;
             })
     };
+
+    // クイズを表示する処理
+    const showQuiz = function (quizNum) {
+
+        questionNumber.innerHTML = quizNum + 1;
+        questionGenre.innerHTML = quizs[quizNum].category;
+        questionDifficulty.innerHTML = quizs[quizNum].difficulty;
+        question.innerHTML = quizs[quizNum].question;
+
+        const answerObj = [];
+        const correctAnswer = quizs[quizNum].correct_answer;
+        const correctAnswerBtn = document.createElement('button');
+        correctAnswerBtn.textContent = correctAnswer;
+
+        answerObj.push(correctAnswerBtn);
+
+        console.log(quizs[quizNum].incorrect_answers);
+
+        quizs[quizNum].incorrect_answers.forEach(function (value) {
+            const incorrectAnswerBtn = document.createElement('button');
+            incorrectAnswerBtn.textContent = value;
+            answerObj.push(incorrectAnswerBtn);
+        });
+
+        for (let i = answerObj.length - 1; i > 0; i--) {
+            let r = Math.floor(Math.random() * (i + 1));
+            let tmp = answerObj[i];
+            answerObj[i] = answerObj[r];
+            answerObj[r] = tmp;
+        }
+    }
+
 }
 
