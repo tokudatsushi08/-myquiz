@@ -4,8 +4,13 @@
     const startBtn = document.getElementById('start-btn');
     const topBtn = document.getElementById('top-btn');
     let quizs = [];
+    const topgenre = document.getElementById('genre');
+    const topDifficult = document.getElementById('difficult');
     const questionNumber = document.getElementById('top-section');
+    const questionGenre = document.getElementById('genre-section');
+    const questionDifficulty = document.getElementById('difficult-section');
     const question = document.getElementById('question');
+
     startBtn.addEventListener('click', function () {
 
         questionNumber.innerHTML = "取得中";
