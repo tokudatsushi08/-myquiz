@@ -1,19 +1,19 @@
 'user strict'
 
 {
-    const startBtn = document.getElementById('start-btn');
-    const topBtn = document.getElementById('top-btn');
-    let quizs = [];
-    const topgenre = document.getElementById('genre');
-    const topDifficult = document.getElementById('difficult');
-    const questionNumber = document.getElementById('top-section');
-    const questionGenre = document.getElementById('genre-section');
-    const questionDifficulty = document.getElementById('difficult-section');
+    const startBtn = document.getElementById('startbtn');
+    const topBtn = document.getElementById('topbtn');
+    let quizzes = [];
+    const genre = document.getElementById('genre');
+    const difficult = document.getElementById('difficult');
+    const topSection = document.getElementById('topsection');
+    const genreSection = document.getElementById('genresection');
+    const difficultSection = document.getElementById('difficultsection');
     const question = document.getElementById('question');
 
     startBtn.addEventListener('click', function () {
 
-        questionNumber.innerHTML = "取得中";
+        topSection.innerHTML = "取得中";
         question.innerHTML = "少々お待ちください";
         getQuiz();
     })
@@ -30,24 +30,21 @@
             // 成功した場合は、responseの内容を引数に入れられる。
             .then(function (response) {
 
+                // response自体がjson型として返ってくる。
                 console.log(response);
                 return response.json();
             })
-            // このthenの引数には、上記で取得したresponseをjson型にした物を引数に入れられる。
             .then(function (json) {
                 console.log(json);
                 console.log(json.results[0]);
                 // jsonの中のresultsという配列を取得する＝slice
-                const quizResults = json.results.slice(0);
-                console.log(quizResults);
+                quizzes = json.results.slice(0);
                 // quizsの配列の中にquizseResultを入れる
-                quizs = quizResults.slice(0, quizResults.length);
-                console.log(quizs);
-
+                console.log(quizzes);
                 topBtn.removeChild(startBtn);
             })
             .catch(function (error) {
-                return error;
+                alert(error);
             })
     };
 }
