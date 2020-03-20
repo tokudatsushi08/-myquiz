@@ -39,7 +39,6 @@
                 console.log(json.results[0]);
                 // jsonの中のresultsという配列を取得する＝slice
                 quizzes = json.results.slice(0);
-                // quizsの配列の中にquizseResultを入れる
                 console.log(quizzes);
                 topBtn.removeChild(startBtn);
             })
