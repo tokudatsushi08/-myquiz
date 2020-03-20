@@ -3,7 +3,7 @@
 {
     const startBtn = document.getElementById('startbtn');
     const topBtn = document.getElementById('topbtn');
-    let quizs = [];
+    let quizzes = [];
     const genre = document.getElementById('genre');
     const difficult = document.getElementById('difficult');
     const topSection = document.getElementById('topsection');
@@ -38,13 +38,13 @@
                 console.log(json);
                 console.log(json.results[0]);
                 // jsonの中のresultsという配列を取得する＝slice
-                quizs = json.results.slice(0);
+                quizzes = json.results.slice(0);
                 // quizsの配列の中にquizseResultを入れる
-                console.log(quizs);
+                console.log(quizzes);
                 topBtn.removeChild(startBtn);
             })
             .catch(function (error) {
-                alert(error);
+                alert(error)
             })
     };
 }
