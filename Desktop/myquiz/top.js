@@ -1,5 +1,4 @@
 'user strict'
-'user strict'
 
 {
     const startBtn = document.getElementById('start-btn');
@@ -41,11 +40,46 @@
                 // jsonの中のresultsという配列を取得する＝slice
                 quizzes = json.results.slice(0);
                 console.log(quizzes);
+                showQuiz(0);
                 topBtn.removeChild(startBtn);
             })
             .catch(function (error) {
                 return alert(error)
             })
     };
-};
 
+    // クイズを表示させる処理
+    const showQuiz = function (quizNum) {
+
+        topSection.innerHTML = quizNum + 1;
+        genreSection.innerHTML = quizzes[quizNum].category;
+        difficultSection.innerHTML = quizzes[quizNum].difficulty;
+        question.innerHTML = quizzes[quizNum].question;
+
+        const answerObj = [];
+        const correctAnswer = quizzes[quizNum].correct_answer;
+        const correctAnswerBtn = document.createElement('button');
+        correctAnswerBtn.textContent = correctAnswer;
+
+        answerObj.push(correctAnswerBtn);
+
+        console.log(quizzes[quizNum].incorrect_answers);
+
+        quizzes[quizNum].incorrect_answers.forEach(function (value) {
+            const incorrectAnswerBtn = document.createElement('button');
+            incorrectAnswerBtn.textContent = value;
+            answerObj.push(incorrectAnswerBtn);
+        });
+
+        for (let i = answerObj.length - 1; i > 0; i--) {
+            let r = Math.floor(Math.random() * (i + 1));
+            let tmp = answerObj[i];
+            answerObj[i] = answerObj[r];
+            answerObj[r] = tmp;
+        }
+
+        for (let i = 0; i < answerObj.length; i++) {
+            topBtn.appendChild(answerObj[i]);
+        };
+    };
+};
