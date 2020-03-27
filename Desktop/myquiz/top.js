@@ -1,4 +1,5 @@
 'user strict'
+'user strict'
 
 {
     const startBtn = document.getElementById('start-btn');
@@ -43,7 +44,7 @@
                 topBtn.removeChild(startBtn);
             })
             .catch(function (error) {
-                alert(error)
+                return alert(error)
             })
     };
 };
