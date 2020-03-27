@@ -1,14 +1,14 @@
 'user strict'
 
 {
-    const startBtn = document.getElementById('startbtn');
-    const topBtn = document.getElementById('topbtn');
+    const startBtn = document.getElementById('start-btn');
+    const topBtn = document.getElementById('top-btn');
     let quizzes = [];
     const genre = document.getElementById('genre');
     const difficult = document.getElementById('difficult');
-    const topSection = document.getElementById('topsection');
-    const genreSection = document.getElementById('genresection');
-    const difficultSection = document.getElementById('difficultsection');
+    const topSection = document.getElementById('top-section');
+    const genreSection = document.getElementById('genre-section');
+    const difficultSection = document.getElementById('difficult-section');
     const question = document.getElementById('question');
 
     startBtn.addEventListener('click', function () {
