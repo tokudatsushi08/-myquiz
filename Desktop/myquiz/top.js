@@ -56,30 +56,36 @@
         difficultSection.innerHTML = quizzes[quizNum].difficulty;
         question.innerHTML = quizzes[quizNum].question;
 
-        const answerObj = [];
+        const answers = [];
         const correctAnswer = quizzes[quizNum].correct_answer;
         const correctAnswerBtn = document.createElement('button');
         correctAnswerBtn.textContent = correctAnswer;
 
-        answerObj.push(correctAnswerBtn);
+        answers.push(correctAnswerBtn);
 
         console.log(quizzes[quizNum].incorrect_answers);
 
         quizzes[quizNum].incorrect_answers.forEach(function (value) {
             const incorrectAnswerBtn = document.createElement('button');
             incorrectAnswerBtn.textContent = value;
-            answerObj.push(incorrectAnswerBtn);
+            answers.push(incorrectAnswerBtn);
+
+            shuffle(answers);
+
+            for (let i = 0; i < answers.length; i++) {
+                topBtn.appendChild(answers[i]);
+            };
         });
+    };
 
-        for (let i = answerObj.length - 1; i > 0; i--) {
+    // 選択肢をシャッフルする処理
+    const shuffle = function (array) {
+        for (let i = array.length - 1; i > 0; i--) {
             let r = Math.floor(Math.random() * (i + 1));
-            let tmp = answerObj[i];
-            answerObj[i] = answerObj[r];
-            answerObj[r] = tmp;
-        }
-
-        for (let i = 0; i < answerObj.length; i++) {
-            topBtn.appendChild(answerObj[i]);
+            let tmp = array[i];
+            array[i] = array[r];
+            array[r] = tmp;
         };
     };
 };
+
