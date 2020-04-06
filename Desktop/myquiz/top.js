@@ -1,5 +1,4 @@
 'user strict'
-'user strict'
 
 {
     const startBtn = document.getElementById('start-btn');
@@ -41,11 +40,52 @@
                 // jsonの中のresultsという配列を取得する＝slice
                 quizzes = json.results.slice(0);
                 console.log(quizzes);
+                showQuiz(0);
                 topBtn.removeChild(startBtn);
             })
             .catch(function (error) {
                 return alert(error)
             })
+    };
+
+    // クイズを表示させる処理
+    const showQuiz = function (quizNum) {
+
+        topSection.innerHTML = quizNum + 1;
+        genreSection.innerHTML = quizzes[quizNum].category;
+        difficultSection.innerHTML = quizzes[quizNum].difficulty;
+        question.innerHTML = quizzes[quizNum].question;
+
+        const answers = [];
+        const correctAnswer = quizzes[quizNum].correct_answer;
+        const correctAnswerBtn = document.createElement('button');
+        correctAnswerBtn.textContent = correctAnswer;
+
+        answers.push(correctAnswerBtn);
+
+        console.log(quizzes[quizNum].incorrect_answers);
+
+        quizzes[quizNum].incorrect_answers.forEach(function (value) {
+            const incorrectAnswerBtn = document.createElement('button');
+            incorrectAnswerBtn.textContent = value;
+            answers.push(incorrectAnswerBtn);
+
+            shuffle(answers);
+
+            for (let i = 0; i < answers.length; i++) {
+                topBtn.appendChild(answers[i]);
+            };
+        });
+    };
+
+    // 選択肢をシャッフルする処理
+    const shuffle = function (array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            let r = Math.floor(Math.random() * (i + 1));
+            let tmp = array[i];
+            array[i] = array[r];
+            array[r] = tmp;
+        };
     };
 };
 
