@@ -4,6 +4,7 @@
     const startBtn = document.getElementById('start-btn');
     const topBtn = document.getElementById('top-btn');
     let quizzes = [];
+    const answerCount = [];
     const genre = document.getElementById('genre');
     const difficult = document.getElementById('difficult');
     const topSection = document.getElementById('top-section');
@@ -62,7 +63,6 @@
         correctAnswerBtn.textContent = correctAnswer;
 
         answers.push(correctAnswerBtn);
-
         console.log(quizzes[quizNum].incorrect_answers);
 
         quizzes[quizNum].incorrect_answers.forEach(function (value) {
@@ -72,10 +72,17 @@
 
             shuffle(answers);
 
+            // answerBtnの配列の中に入っている回答を表示させる処理
             for (let i = 0; i < answers.length; i++) {
                 topBtn.appendChild(answers[i]);
             };
         });
+
+        for (let w = 0; w < answers.length; w++) {
+            answers[w].addEventListener('click', function () {
+                pushAnswerBtn(answers[w].textContent, correctAnswer, quizNum);
+            })
+        }
     };
 
     // 選択肢をシャッフルする処理
@@ -87,5 +94,31 @@
             array[r] = tmp;
         };
     };
-};
 
+    // 回答ボタンを押した後の処理
+    const pushAnswerBtn = function (answer, correct, number) {
+        // 回答ボタンで押されたものが正解だった場合
+        if (answer === correct) {
+            topBtn.innerHTML = '';
+            answerCount.push(1);
+            console.log('正解だよ！');
+            console.log(answerCount);
+
+            nextQuiz(number);
+        }
+        // 回答ボタンで押されたものが不正解だった場合
+        else {
+            topBtn.innerHTML = '';
+            nextQuiz(number);
+        }
+    }
+
+    const nextQuiz = function (index) {
+        const questNumber = index + 1;
+        if (questNumber < 10) {
+            showQuiz(questNumber);
+        } else {
+            alert('終わり！');
+        }
+    }
+};
