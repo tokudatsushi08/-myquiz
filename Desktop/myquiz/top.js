@@ -57,32 +57,19 @@
         difficultSection.innerHTML = quizzes[quizNum].difficulty;
         question.innerHTML = quizzes[quizNum].question;
 
+        // 回答を入れる配列を作成
         const answers = [];
+        // 正解を配列に入れる
         const correctAnswer = quizzes[quizNum].correct_answer;
-        const correctAnswerBtn = document.createElement('button');
-        correctAnswerBtn.textContent = correctAnswer;
-
-        answers.push(correctAnswerBtn);
-        console.log(quizzes[quizNum].incorrect_answers);
-
+        answers.push(correctAnswer);
+        // 誤答を順に配列に入れる
         quizzes[quizNum].incorrect_answers.forEach(function (value) {
-            const incorrectAnswerBtn = document.createElement('button');
-            incorrectAnswerBtn.textContent = value;
-            answers.push(incorrectAnswerBtn);
-
-            shuffle(answers);
-
-            // answerBtnの配列の中に入っている回答を表示させる処理
-            for (let i = 0; i < answers.length; i++) {
-                topBtn.appendChild(answers[i]);
-            };
+            answers.push(value);
         });
+        shuffle(answers);
+        createBtn(answers, quizNum);
 
-        for (let w = 0; w < answers.length; w++) {
-            answers[w].addEventListener('click', function () {
-                pushAnswerBtn(answers[w].textContent, correctAnswer, quizNum);
-            })
-        }
+        console.log(answers);
     };
 
     // 選択肢をシャッフルする処理
@@ -95,10 +82,22 @@
         };
     };
 
+    // buttonを作成する処理
+    const createBtn = function (array, num) {
+        array.forEach(function (value) {
+            const answerBtn = document.createElement('button');
+            answerBtn.textContent = value;
+            topBtn.appendChild(answerBtn);
+            answerBtn.addEventListener('click', function () {
+                pushAnswerBtn(value, num);
+            })
+        })
+    };
+
     // 回答ボタンを押した後の処理
-    const pushAnswerBtn = function (answer, correct, number) {
+    const pushAnswerBtn = function (answer, number) {
         // 回答ボタンで押されたものが正解だった場合
-        if (answer === correct) {
+        if (answer === quizzes[number].correct_answer) {
             topBtn.innerHTML = '';
             answerCount.push(1);
             console.log('正解だよ！');
