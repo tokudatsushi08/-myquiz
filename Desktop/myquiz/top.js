@@ -4,7 +4,7 @@
     const startBtn = document.getElementById('start-btn');
     const topBtn = document.getElementById('top-btn');
     let quizzes = [];
-    const answerCount = [];
+    let answerCount = 0;
     const genre = document.getElementById('genre');
     const difficult = document.getElementById('difficult');
     const topSection = document.getElementById('top-section');
@@ -99,7 +99,7 @@
         // 回答ボタンで押されたものが正解だった場合
         if (answer === quizzes[number].correct_answer) {
             topBtn.innerHTML = '';
-            answerCount.push(1);
+            answerCount++;
             console.log('正解だよ！');
             console.log(answerCount);
 
