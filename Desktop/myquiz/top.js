@@ -4,6 +4,7 @@
     const startBtn = document.getElementById('start-btn');
     const topBtn = document.getElementById('top-btn');
     let quizzes = [];
+    let answerCount = 0;
     const genre = document.getElementById('genre');
     const difficult = document.getElementById('difficult');
     const topSection = document.getElementById('top-section');
@@ -56,26 +57,19 @@
         difficultSection.innerHTML = quizzes[quizNum].difficulty;
         question.innerHTML = quizzes[quizNum].question;
 
+        // 回答を入れる配列を作成
         const answers = [];
+        // 正解を配列に入れる
         const correctAnswer = quizzes[quizNum].correct_answer;
-        const correctAnswerBtn = document.createElement('button');
-        correctAnswerBtn.textContent = correctAnswer;
-
-        answers.push(correctAnswerBtn);
-
-        console.log(quizzes[quizNum].incorrect_answers);
-
+        answers.push(correctAnswer);
+        // 誤答を順に配列に入れる
         quizzes[quizNum].incorrect_answers.forEach(function (value) {
-            const incorrectAnswerBtn = document.createElement('button');
-            incorrectAnswerBtn.textContent = value;
-            answers.push(incorrectAnswerBtn);
-
-            shuffle(answers);
-
-            for (let i = 0; i < answers.length; i++) {
-                topBtn.appendChild(answers[i]);
-            };
+            answers.push(value);
         });
+        shuffle(answers);
+        createBtn(answers, quizNum);
+
+        console.log(answers);
     };
 
     // 選択肢をシャッフルする処理
@@ -87,5 +81,43 @@
             array[r] = tmp;
         };
     };
-};
 
+    // buttonを作成する処理
+    const createBtn = function (array, num) {
+        array.forEach(function (value) {
+            const answerBtn = document.createElement('button');
+            answerBtn.textContent = value;
+            topBtn.appendChild(answerBtn);
+            answerBtn.addEventListener('click', function () {
+                pushAnswerBtn(value, num);
+            })
+        })
+    };
+
+    // 回答ボタンを押した後の処理
+    const pushAnswerBtn = function (answer, number) {
+        // 回答ボタンで押されたものが正解だった場合
+        if (answer === quizzes[number].correct_answer) {
+            topBtn.innerHTML = '';
+            answerCount++;
+            console.log('正解だよ！');
+            console.log(answerCount);
+
+            nextQuiz(number);
+        }
+        // 回答ボタンで押されたものが不正解だった場合
+        else {
+            topBtn.innerHTML = '';
+            nextQuiz(number);
+        }
+    }
+
+    const nextQuiz = function (index) {
+        const questNumber = index + 1;
+        if (questNumber < 10) {
+            showQuiz(questNumber);
+        } else {
+            alert('終わり！');
+        }
+    }
+};
