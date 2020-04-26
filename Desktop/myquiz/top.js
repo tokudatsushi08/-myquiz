@@ -7,6 +7,7 @@
     let answerCount = 0;
     const genre = document.getElementById('genre');
     const difficult = document.getElementById('difficult');
+    const top = document.getElementById('top');
     const topSection = document.getElementById('top-section');
     const genreSection = document.getElementById('genre-section');
     const difficultSection = document.getElementById('difficult-section');
@@ -117,7 +118,33 @@
         if (questNumber < 10) {
             showQuiz(questNumber);
         } else {
-            alert('終わり！');
+            showResult();
         }
+    }
+
+    // 10問目まで答えた後の結果表示
+    const showResult = function () {
+        const reStartBtn = document.createElement('button');
+        reStartBtn.textContent = "再チャレンジする";
+        reStartBtn.addEventListener('click', function () {
+            reStartQuiz(reStartBtn);
+        })
+
+        topSection.innerHTML = "あなたの正解数は" + answerCount + "です！";
+        genreSection.innerHTML = '';
+        difficultSection.innerHTML = '';
+        question.innerHTML = "再チャレンジしたい場合は下のボタンをクリック！";
+
+        topBtn.appendChild(reStartBtn);
+    }
+
+    // 再チャレンジボタンを押した後の処理
+    const reStartQuiz = function (reStartBtn) {
+        topSection.innerHTML = "取得中";
+        question.innerHTML = "少々お待ちください";
+        answerCount = 0;
+        topBtn.removeChild(reStartBtn);
+        topBtn.appendChild(startBtn);
+        getQuiz();
     }
 };
